@@ -252,3 +252,38 @@ strong{color:var(--platinum);font-weight:500}
   .reveal{opacity:1;transform:none;transition:none}
   .hero__media img{transform:none}
 }
+
+/* ============================================================
+   CINEMATIC LAYER — depth field, boot, tilt, cursor light
+   ============================================================ */
+.webgl{position:fixed;inset:0;z-index:0;pointer-events:none}
+.cursor-glow{position:fixed;top:0;left:0;width:620px;height:620px;border-radius:50%;
+  pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(201,162,78,.10),transparent 62%);
+  mix-blend-mode:screen;will-change:transform;transition:opacity .5s}
+@media (hover:none){.cursor-glow{display:none}}
+
+/* keep all real content above the depth field */
+.nav,.spine,.footer,section,.hero,.page-head{position:relative;z-index:2}
+
+/* boot reveal (home only) */
+#boot{position:fixed;inset:0;z-index:100;background:var(--void);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:24px;transition:opacity .9s ease}
+#boot.done{opacity:0;pointer-events:none}
+#boot .bw{font-family:var(--font-mono);letter-spacing:.42em;color:var(--bone);font-size:clamp(15px,2.4vw,20px)}
+#boot .bw span{color:var(--gold)}
+#boot .bbar{width:210px;height:1px;background:var(--line-2);position:relative;overflow:hidden}
+#boot .bbar::after{content:"";position:absolute;inset:0;left:-100%;
+  background:linear-gradient(90deg,transparent,var(--gold-2));box-shadow:0 0 10px var(--gold-glow);
+  animation:bootfill 1.7s cubic-bezier(.6,0,.2,1) forwards}
+#boot .bmsg{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.34em;color:var(--steel);text-transform:uppercase}
+@keyframes bootfill{to{left:0}}
+body.booting{overflow:hidden}
+
+/* 3D tilt targets */
+.tilt{transition:transform .35s cubic-bezier(.2,.7,.2,1);will-change:transform;transform-style:preserve-3d}
+
+@media (prefers-reduced-motion:reduce){
+  .webgl,.cursor-glow{display:none}
+  #boot{display:none}
+  .tilt{transition:none}
+}
